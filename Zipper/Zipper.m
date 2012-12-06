@@ -89,7 +89,7 @@
     size.height = MIN_TOUCH_DIMENSION;
   
   return CGRectMake(self.bounds.size.width / 2.0 - size.width / 2.0,
-                                 [self getTopOfHandleInRect:self.bounds] + handleImage.size.height / 2.0 - size.height,
+                                 [self getTopOfHandleInRect:self.bounds] - (size.height - handleImage.size.height) / 2.0,
                                  size.width,
                                  size.height);
 }
