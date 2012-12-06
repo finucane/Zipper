@@ -134,9 +134,10 @@
   }
   
   if (!isTracking) return YES;
-  
+  float heightRange = self.bounds.size.height - handleImage.size.height;
+
   CGPoint p = [touch locationInView:self];
-  float delta = (p.y - startPoint.y) / self.bounds.size.height;
+  float delta = (p.y - startPoint.y) / heightRange;
   self.value = startValue + delta;
   
   /*fire any events, this is a control after all*/
@@ -438,7 +439,7 @@
   dy = 2 * (1.0 - t) * (p1.y - p0.y) + 2 * t * (p2.y - p1.y);
   
   
-  *radians = dy == 0.0 ? M_PI : atan (dy/dx);
+  *radians = dx == 0.0 ? M_PI : atan (dy/dx);
   return CGPointMake(x, y);
 }
 
