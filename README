@@ -1,0 +1,27 @@
+in a phunware.com job interview phone-screen yesterday the manager dude described an expert ios
+programmer as someone who could do something like make an animated zipper. i started thinking about
+how i'd do it while we were still on the phone, kept thinking about it on my daily bike ride, and
+came up with this later on that night.
+
+Zipper is a custom UIControl. it's like UISlider, but simpler since i was in a hurry (so its values
+always go from 0 to 1 and it has minimal configuration, the images are all hardcoded etc etc.)
+
+it's a control that has a transparent region so you can see what's behind the zipper.
+
+lame but now i know how to sort of subclass uicontrol and draw bezier stuff. i still don't know how
+to make nice looking pngs, but i did make an effort. (the teeth are all wrong, but with proper
+images they can actually meet perfectly. also i didn't have time to do something really
+professional, like shadows. and packaging the thing up in a framework.
+
+it took 5 sheets of paper and a stolen myricom pen, see notes.png. that's sort of proof i didn't
+cheat and just find this somewhere (someone probably has done this.)
+
+it is a mix of skeuomorphism and cartoon because i can't draw, but i can steal fabric patterns off
+google images.
+
+if i had touched iOS in the last 6 months i would have been faster -- this took from 8 pm to 6 am, i
+spent easily 2 hours trying to make the pngs (see the Images subdir), most of the other time was
+researching beziers and reading up on uicontrol subclassing and quartz2d stuff i'd forgotten. it's
+not a lot of code, a senior ios developer would do it in 2 hours maybe. (and better).
+
+tested on ios 6, just on iphones (not ipads). no idea how to do autorotating anymore on ios5.

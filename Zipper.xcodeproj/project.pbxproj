@@ -1,0 +1,347 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		79048535167062C8008C103A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79048534167062C8008C103A /* UIKit.framework */; };
+		79048537167062C8008C103A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79048536167062C8008C103A /* Foundation.framework */; };
+		79048539167062C8008C103A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79048538167062C8008C103A /* CoreGraphics.framework */; };
+		7904853F167062C8008C103A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7904853D167062C8008C103A /* InfoPlist.strings */; };
+		79048541167062C8008C103A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 79048540167062C8008C103A /* main.m */; };
+		79048545167062C8008C103A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 79048544167062C8008C103A /* AppDelegate.m */; };
+		79048547167062C8008C103A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 79048546167062C8008C103A /* Default.png */; };
+		79048549167062C8008C103A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79048548167062C8008C103A /* Default@2x.png */; };
+		7904854B167062C8008C103A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7904854A167062C8008C103A /* Default-568h@2x.png */; };
+		7904854E167062C8008C103A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7904854D167062C8008C103A /* ViewController.m */; };
+		79048551167062C8008C103A /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7904854F167062C8008C103A /* ViewController.xib */; };
+		7904855E167062E5008C103A /* handle.png in Resources */ = {isa = PBXBuildFile; fileRef = 79048558167062E5008C103A /* handle.png */; };
+		79048560167062E5008C103A /* handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7904855A167062E5008C103A /* handle@2x.png */; };
+		79048561167062E5008C103A /* tooth.png in Resources */ = {isa = PBXBuildFile; fileRef = 7904855B167062E5008C103A /* tooth.png */; };
+		79048563167062E5008C103A /* tooth@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7904855D167062E5008C103A /* tooth@2x.png */; };
+		79048567167063A9008C103A /* Zipper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7904856616706300008C103A /* Zipper.m */; };
+		7904856916708A33008C103A /* pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 7904856816708A33008C103A /* pattern.png */; };
+		7904856C1670AC9F008C103A /* handleSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7904856A1670AC9F008C103A /* handleSelected.png */; };
+		7904856D1670AC9F008C103A /* handleSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7904856B1670AC9F008C103A /* handleSelected@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		79048530167062C8008C103A /* Zipper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		79048534167062C8008C103A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		79048536167062C8008C103A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		79048538167062C8008C103A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		7904853C167062C8008C103A /* Zipper-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Zipper-Info.plist"; sourceTree = "<group>"; };
+		7904853E167062C8008C103A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		79048540167062C8008C103A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		79048542167062C8008C103A /* Zipper-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Zipper-Prefix.pch"; sourceTree = "<group>"; };
+		79048543167062C8008C103A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		79048544167062C8008C103A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		79048546167062C8008C103A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		79048548167062C8008C103A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		7904854A167062C8008C103A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		7904854C167062C8008C103A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		7904854D167062C8008C103A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		79048550167062C8008C103A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		79048558167062E5008C103A /* handle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = handle.png; sourceTree = "<group>"; };
+		79048559167062E5008C103A /* handle.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = handle.pxm; sourceTree = "<group>"; };
+		7904855A167062E5008C103A /* handle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "handle@2x.png"; sourceTree = "<group>"; };
+		7904855B167062E5008C103A /* tooth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tooth.png; sourceTree = "<group>"; };
+		7904855C167062E5008C103A /* tooth.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = tooth.pxm; sourceTree = "<group>"; };
+		7904855D167062E5008C103A /* tooth@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tooth@2x.png"; sourceTree = "<group>"; };
+		79048564167062F7008C103A /* insist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = insist.h; sourceTree = "<group>"; };
+		7904856516706300008C103A /* Zipper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Zipper.h; sourceTree = "<group>"; };
+		7904856616706300008C103A /* Zipper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Zipper.m; sourceTree = "<group>"; };
+		7904856816708A33008C103A /* pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern.png; sourceTree = "<group>"; };
+		7904856A1670AC9F008C103A /* handleSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = handleSelected.png; sourceTree = "<group>"; };
+		7904856B1670AC9F008C103A /* handleSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "handleSelected@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7904852D167062C8008C103A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79048535167062C8008C103A /* UIKit.framework in Frameworks */,
+				79048537167062C8008C103A /* Foundation.framework in Frameworks */,
+				79048539167062C8008C103A /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		79048525167062C8008C103A = {
+			isa = PBXGroup;
+			children = (
+				7904853A167062C8008C103A /* Zipper */,
+				79048533167062C8008C103A /* Frameworks */,
+				79048531167062C8008C103A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		79048531167062C8008C103A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				79048530167062C8008C103A /* Zipper.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		79048533167062C8008C103A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				79048534167062C8008C103A /* UIKit.framework */,
+				79048536167062C8008C103A /* Foundation.framework */,
+				79048538167062C8008C103A /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7904853A167062C8008C103A /* Zipper */ = {
+			isa = PBXGroup;
+			children = (
+				79048564167062F7008C103A /* insist.h */,
+				7904856516706300008C103A /* Zipper.h */,
+				7904856616706300008C103A /* Zipper.m */,
+				79048543167062C8008C103A /* AppDelegate.h */,
+				79048544167062C8008C103A /* AppDelegate.m */,
+				7904854C167062C8008C103A /* ViewController.h */,
+				7904854D167062C8008C103A /* ViewController.m */,
+				7904854F167062C8008C103A /* ViewController.xib */,
+				79048557167062E5008C103A /* Images */,
+				7904853B167062C8008C103A /* Supporting Files */,
+			);
+			path = Zipper;
+			sourceTree = "<group>";
+		};
+		7904853B167062C8008C103A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7904853C167062C8008C103A /* Zipper-Info.plist */,
+				7904853D167062C8008C103A /* InfoPlist.strings */,
+				79048540167062C8008C103A /* main.m */,
+				79048542167062C8008C103A /* Zipper-Prefix.pch */,
+				79048546167062C8008C103A /* Default.png */,
+				79048548167062C8008C103A /* Default@2x.png */,
+				7904854A167062C8008C103A /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		79048557167062E5008C103A /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				7904856816708A33008C103A /* pattern.png */,
+				79048558167062E5008C103A /* handle.png */,
+				79048559167062E5008C103A /* handle.pxm */,
+				7904855A167062E5008C103A /* handle@2x.png */,
+				7904856A1670AC9F008C103A /* handleSelected.png */,
+				7904856B1670AC9F008C103A /* handleSelected@2x.png */,
+				7904855B167062E5008C103A /* tooth.png */,
+				7904855C167062E5008C103A /* tooth.pxm */,
+				7904855D167062E5008C103A /* tooth@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7904852F167062C8008C103A /* Zipper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 79048554167062C8008C103A /* Build configuration list for PBXNativeTarget "Zipper" */;
+			buildPhases = (
+				7904852C167062C8008C103A /* Sources */,
+				7904852D167062C8008C103A /* Frameworks */,
+				7904852E167062C8008C103A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Zipper;
+			productName = Zipper;
+			productReference = 79048530167062C8008C103A /* Zipper.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		79048527167062C8008C103A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = finucane;
+			};
+			buildConfigurationList = 7904852A167062C8008C103A /* Build configuration list for PBXProject "Zipper" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 79048525167062C8008C103A;
+			productRefGroup = 79048531167062C8008C103A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7904852F167062C8008C103A /* Zipper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7904852E167062C8008C103A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7904853F167062C8008C103A /* InfoPlist.strings in Resources */,
+				79048547167062C8008C103A /* Default.png in Resources */,
+				79048549167062C8008C103A /* Default@2x.png in Resources */,
+				7904854B167062C8008C103A /* Default-568h@2x.png in Resources */,
+				79048551167062C8008C103A /* ViewController.xib in Resources */,
+				7904855E167062E5008C103A /* handle.png in Resources */,
+				79048560167062E5008C103A /* handle@2x.png in Resources */,
+				79048561167062E5008C103A /* tooth.png in Resources */,
+				79048563167062E5008C103A /* tooth@2x.png in Resources */,
+				7904856916708A33008C103A /* pattern.png in Resources */,
+				7904856C1670AC9F008C103A /* handleSelected.png in Resources */,
+				7904856D1670AC9F008C103A /* handleSelected@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7904852C167062C8008C103A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79048541167062C8008C103A /* main.m in Sources */,
+				79048545167062C8008C103A /* AppDelegate.m in Sources */,
+				7904854E167062C8008C103A /* ViewController.m in Sources */,
+				79048567167063A9008C103A /* Zipper.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7904853D167062C8008C103A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7904853E167062C8008C103A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7904854F167062C8008C103A /* ViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				79048550167062C8008C103A /* en */,
+			);
+			name = ViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		79048552167062C8008C103A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		79048553167062C8008C103A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		79048555167062C8008C103A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Zipper/Zipper-Prefix.pch";
+				INFOPLIST_FILE = "Zipper/Zipper-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		79048556167062C8008C103A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Zipper/Zipper-Prefix.pch";
+				INFOPLIST_FILE = "Zipper/Zipper-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7904852A167062C8008C103A /* Build configuration list for PBXProject "Zipper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79048552167062C8008C103A /* Debug */,
+				79048553167062C8008C103A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		79048554167062C8008C103A /* Build configuration list for PBXNativeTarget "Zipper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79048555167062C8008C103A /* Debug */,
+				79048556167062C8008C103A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 79048527167062C8008C103A /* Project object */;
+}
