@@ -26,6 +26,8 @@
 		7904856916708A33008C103A /* pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 7904856816708A33008C103A /* pattern.png */; };
 		7904856C1670AC9F008C103A /* handleSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7904856A1670AC9F008C103A /* handleSelected.png */; };
 		7904856D1670AC9F008C103A /* handleSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7904856B1670AC9F008C103A /* handleSelected@2x.png */; };
+		7924BC3F16785DA8004D8A53 /* 57.png in Resources */ = {isa = PBXBuildFile; fileRef = 7924BC3E16785DA8004D8A53 /* 57.png */; };
+		7924BC4216785DCB004D8A53 /* 114.png in Resources */ = {isa = PBXBuildFile; fileRef = 7924BC4116785DCB004D8A53 /* 114.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +59,8 @@
 		7904856816708A33008C103A /* pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern.png; sourceTree = "<group>"; };
 		7904856A1670AC9F008C103A /* handleSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = handleSelected.png; sourceTree = "<group>"; };
 		7904856B1670AC9F008C103A /* handleSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "handleSelected@2x.png"; sourceTree = "<group>"; };
+		7924BC3E16785DA8004D8A53 /* 57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 57.png; sourceTree = "<group>"; };
+		7924BC4116785DCB004D8A53 /* 114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 114.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +80,8 @@
 		79048525167062C8008C103A = {
 			isa = PBXGroup;
 			children = (
+				7924BC4116785DCB004D8A53 /* 114.png */,
+				7924BC3E16785DA8004D8A53 /* 57.png */,
 				7904853A167062C8008C103A /* Zipper */,
 				79048533167062C8008C103A /* Frameworks */,
 				79048531167062C8008C103A /* Products */,
@@ -210,6 +216,8 @@
 				7904856916708A33008C103A /* pattern.png in Resources */,
 				7904856C1670AC9F008C103A /* handleSelected.png in Resources */,
 				7904856D1670AC9F008C103A /* handleSelected@2x.png in Resources */,
+				7924BC3F16785DA8004D8A53 /* 57.png in Resources */,
+				7924BC4216785DCB004D8A53 /* 114.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +348,7 @@
 				79048556167062C8008C103A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

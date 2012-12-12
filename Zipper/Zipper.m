@@ -21,8 +21,8 @@
 - (void)recomputeBeziersInRect:(CGRect)rect;
 - (void)drawEdgesToContext:(CGContextRef)context inRect:(CGRect)rect;
 - (void)drawBackgroundToContext:(CGContextRef)context inRect:(CGRect)rect;
-- (CGPoint)getBezierPointAndRadians:(float*)radians forT:(float)t p0:(CGPoint)p0 p1:(CGPoint)p1 p2:(CGPoint)p2;
-
+- (CGPoint)getBezierPointAndRadians:(double*)radians forT:(double)t p0:(CGPoint)p0 p1:(CGPoint)p1 p2:(CGPoint)p2;
+- (double)getTForYBezierPoint:(double)y p0:(CGPoint)p0 p1:(CGPoint)p1 p2:(CGPoint)p2;
 @end
 
 
@@ -53,7 +53,7 @@
      call drawRect whenever its size changes. we'll override the setter property
      to make it so that this can't be disabled*/
     super.contentMode = UIViewContentModeRedraw;
-
+    
   }
   return self;
 }
@@ -89,9 +89,9 @@
     size.height = MIN_TOUCH_DIMENSION;
   
   return CGRectMake(self.bounds.size.width / 2.0 - size.width / 2.0,
-                                 [self getTopOfHandleInRect:self.bounds] - (size.height - handleImage.size.height) / 2.0,
-                                 size.width,
-                                 size.height);
+                    [self getTopOfHandleInRect:self.bounds] - (size.height - handleImage.size.height) / 2.0,
+                    size.width,
+                    size.height);
 }
 /*
  uicontrol stuff. when we start a touch, we remember the initial position and value
@@ -103,7 +103,7 @@
  
  apparently none of these have to call super. not sure on this since we are subclassing uicontrol rather
  than uiview.
-*/
+ */
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
@@ -135,7 +135,7 @@
   
   if (!isTracking) return YES;
   float heightRange = self.bounds.size.height - handleImage.size.height;
-
+  
   CGPoint p = [touch locationInView:self];
   float delta = (p.y - startPoint.y) / heightRange;
   self.value = startValue + delta;
@@ -186,6 +186,7 @@
   /*draw the teeth on top of the edges*/
   [self drawTeethToContext:context inRect:rect];
   
+  
   /*draw the handle down the center of the rect on top of the teeth*/
   [isTracking ? selectedHandleImage : handleImage drawAtPoint: CGPointMake(rect.origin.x + rect.size.width / 2.0 - handleImage.size.width / 2.0, [self getTopOfHandleInRect:rect])];
 }
@@ -213,21 +214,20 @@
   float topOfHandle = [self getTopOfHandleInRect:rect];
   
   /*offset it so the curves start under the middle of the fat part of handle*/
-  topOfHandle += handleImage.size.height / 4.0;
+  topOfHandle += handleImage.size.height / 2.0;
   leftP0.x = rect.origin.x + rect.size.width / 2.0 - EDGE_WIDTH / 2.0,
   leftP0.y = topOfHandle;
   leftCP.x = rect.origin.x + rect.size.width / 2.0;
-  leftCP.y = topOfHandle / 2;
+  leftCP.y = topOfHandle / 2.0;
   leftP1.x = rect.origin.x + (rect.size.width / 2.0) * (1.0 - value);
   leftP1.y = rect.origin.y - EDGE_WIDTH; //we let clipping do work trim the edge at the top of the rect.
   
+  /*we use the same control and start endpoints for both curves, but we don't have to*/
   rightCP = leftCP;
-  rightP0.x = rect.origin.x + rect.size.width / 2.0 + EDGE_WIDTH / 2.0;
-  rightP0.y = topOfHandle;
+  rightP0 = leftP0;
+  
   rightP1.x = (rect.origin.x + rect.size.width) - (rect.size.width / 2.0) * (1.0 - value);
   rightP1.y = rect.origin.y - EDGE_WIDTH;
-  
-  
 }
 
 /*
@@ -304,101 +304,163 @@
 
 /*
  draw the teeth. the teeth above the handle go along the bezier curves. below the handle
- they just go straight down, interlocking and on top of each other, like a zipper
+ they just go straight down, interlocking and on top of each other, like a zipper. the actual
+ above/below the handle point is the bottom of the "v" of the bezier curves, this might not
+ have anything to do with where we actually draw the handle image. the curves might meet
+ in the center of the handle somewhere, we don't care in this method.
+ 
+ when this method is called, the bezier curves are are already re-computed based on the
+ handle position.
  */
 - (void)drawTeethToContext:(CGContextRef)context inRect:(CGRect)rect
 {
-  /*get how many teeth the zipper has*/
-  float totalTeeth = rect.size.height  / toothImage.size.height;
   
-  /*
-    get how many teeth are above the zipper handle. the height of the handle is
-    already taken into account because of what "value" is allowed to be based.
-   */
+  /*draw the teeth under the "v" of the bezier curves, starting with the left side*/
   
-  float numTopTeeth = value * totalTeeth;
-  
-  /*we use the handle itself to hide how the teeth actually mate between
-   the bezier and the straight part, these floats are for that sloppage */
-  
-  float numHandleTeeth = 1 + handleImage.size.height / toothImage.size.height;
-  float numBottomTeeth = totalTeeth - numTopTeeth + numHandleTeeth;
-  float middleOfHandle = [self getTopOfHandleInRect:rect] + handleImage.size.height / 2.0;
-  
-  
-  /*draw the teeth under the handle, starting w/ the left side*/
-  for (int i = 0; i < numBottomTeeth; i++)
+  float topOfHandle = [self getTopOfHandleInRect:rect];
+  CGPoint p;
+  int tooth;
+  for (tooth = 0; ; tooth++)
   {
+    /*save the context because we are doing translations and rotations*/
     CGContextSaveGState(context);
     
     /*left*/
-    if (i % 2 == 0)
+    
+    if (tooth % 2 == 0)
     {
-      CGPoint p = CGPointMake (rect.origin.x + rect.size.width / 2.0 - (toothImage.size.width - TOOTH_HEAD_WIDTH),
-                               rect.origin.y + rect.size.height - (i+1) * toothImage.size.height);
+      p = CGPointMake (rect.origin.x + rect.size.width / 2.0 - (toothImage.size.width - TOOTH_HEAD_WIDTH),
+                       rect.origin.y + rect.size.height - (tooth+1) * toothImage.size.height);
       
-      if (p.y < middleOfHandle) continue;
       CGContextTranslateCTM (context, p.x, p.y);
     }
     else
     {
-      CGPoint p = CGPointMake (rect.origin.x + rect.size.width / 2.0 + (toothImage.size.width - TOOTH_HEAD_WIDTH),
-                               rect.origin.y + rect.size.height - i * toothImage.size.height);
+      p = CGPointMake (rect.origin.x + rect.size.width / 2.0 + (toothImage.size.width - TOOTH_HEAD_WIDTH),
+                       rect.origin.y + rect.size.height - tooth * toothImage.size.height);
       
-      if (p.y < middleOfHandle) continue;
-
       CGContextTranslateCTM (context, p.x, p.y);
+      
+      /*we drew our tooth image to be a left-hand tooth, so for the right side, the tooth needs to be flipped around*/
       CGContextRotateCTM (context, M_PI);
       
     }
     
+    /*draw the tooth*/
     [toothImage drawAtPoint: CGPointMake(0,0)];
-    
     CGContextRestoreGState (context);
+    
+    /*if we drew any part of the tooth above the bezier start point, we are done with the lower teeth. p is the upper-left hand corner
+     of whatever tooth we were drawing.*/
+    if (p.y < leftP0.y)
+      break;
   }
   
-  /*draw the teeth above the handle*/
-  for (int i = 0; i < numTopTeeth; i++)
+  /*
+   draw the upper teeth. we do this by going up along each bezier curve, adding each tooth where it should be. measuring the
+   fixed distance between teeth along the bezier curves themselves. we know the slope of each point on the curve, and the distance
+   between teeth is just the tooth height, so with some trigonometry we can step up along the curves. we stop when we
+   start drawing off screen.
+   
+   since we care about the vertical dimension because the teeth are stacking up on top of each other, we compute the y's from
+   slopes and whatnot, then we compute the corresponding x's to make sure we stay on the curve by using math on the beziers.
+   
+   that way we stay on the curve and our initial y point can be an easy approximation rather than a calculation. we know
+   we are starting out vertical, so the first "y" is just the tooth height above the last "y" from the topmost bottom tooth.
+   */
+  
+  
+  /*make the initial points that will track up the curves. these are all going to be top-left hand corners of the tooth images
+   as if the curves were staight lines going up and we didn't need to do translation and rotation.*/
+  
+  CGPoint leftP, rightP;
+  
+  /*the initial tooth is on the opposite side of the last one. we will always have drawn at least one tooth by now*/
+  tooth++;
+  
+  
+  leftP.y = p.y - toothImage.size.height;
+  leftP.x = leftP0.x;
+  rightP.y = p.y - toothImage.size.height;
+  rightP.x = rightP0.x;
+  
+  /*as we go along, we can place each tooth with existing leftP, or rightP and then compute the next leftP or rightP values*/
+  for (; leftP.y >= 0.0 || rightP.y >= 0.0; tooth++)
   {
     /*left*/
-    if (i % 2 == 0)
+    if (tooth % 2 == 0)
     {
-      float t = (float) i * 1.0 / numTopTeeth;
-
-      float radians;
-      CGPoint p = [self getBezierPointAndRadians:&radians forT:t p0:leftP0 p1:leftCP p2:leftP1];
+      if (leftP.y < 0 || leftP.y > leftP0.y) continue;
       
-      /*nice corner case on our slope stuff*/
-      if (i == 0)
-        radians *= -1;
       CGContextSaveGState(context);
       
-      CGContextTranslateCTM (context, p.x - (toothImage.size.width - TOOTH_HEAD_WIDTH), p.y);
+      /*figure out where our "t" is for this point. we need this for slope.*/
+      double t = [self getTForYBezierPoint:leftP.y p0:leftP0 p1:leftCP p2:leftP1];
+      
+      /*get slope. "p" should be the same as leftP actually*/
+      double radians;
+      CGPoint p = [self getBezierPointAndRadians:&radians forT:t p0:leftP0 p1:leftCP p2:leftP1];
+
+      CGContextTranslateCTM (context, leftP.x - (toothImage.size.width - TOOTH_HEAD_WIDTH), leftP.y);
       CGContextRotateCTM (context, radians - M_PI / 2.0);
       
-      [toothImage drawAtPoint: CGPointMake(0,0)];
+      /*only actually draw it if it's above the handle. this also handles a corner case by hiding it entirely.*/
+
+      if (leftP.y < topOfHandle)
+        [toothImage drawAtPoint: CGPointMake(0,0)];
       
       CGContextRestoreGState (context);
+      
+      /*use 8th grade trigonometry to get the next "y" point based on the slope and the hypotenuse distance, which
+       is the distance between teeth along the curve*/
+      
+      leftP.y = p.y - 2 * toothImage.size.height * fabs (sin (radians));
+      
+      if (leftP.y < 0 || leftP.y > leftP0.y) continue;
+      
+      /*get the "t" value for this y*/
+      t = [self getTForYBezierPoint:leftP.y p0:leftP0 p1:leftCP p2:leftP1];
+      
+      /*move the point up along the curve to "t"*/
+      leftP = [self getBezierPointAndRadians:&radians forT:t p0:leftP0 p1:leftCP p2:leftP1];
     }
     else
     {
+      if (rightP.y < 0 || rightP.y > rightP0.y) continue;
+      
       CGContextSaveGState(context);
       
-      /*the right hand teeth are staggered up one, do this and handle the out of bounds case*/
-      float t = (float) (i+1) * 1.0 / numTopTeeth;
-      if (t > 1.0) t = 1.0;
+      /*figure out where our "t" is for this point. we need this for slope.*/
+      double t = [self getTForYBezierPoint:rightP.y p0:rightP0 p1:rightCP p2:rightP1];
       
-      float radians;
+      /*get slope. "p" should be the same as rightP actually*/
+      double radians;
       CGPoint p = [self getBezierPointAndRadians:&radians forT:t p0:rightP0 p1:rightCP p2:rightP1];
+  
+      CGContextTranslateCTM (context, rightP.x + (toothImage.size.width - TOOTH_HEAD_WIDTH), rightP.y);
       
-      CGContextTranslateCTM (context, p.x + (toothImage.size.width - TOOTH_HEAD_WIDTH), p.y);
       CGContextRotateCTM (context, radians - M_PI / 2.0);
       
-      [toothImage drawAtPoint: CGPointMake(0,0)];
+      /*only actually draw it if it's above the handle*/
+      if (rightP.y < topOfHandle)
+        [toothImage drawAtPoint: CGPointMake(0,0)];
       
       CGContextRestoreGState (context);
       
+      /*use 8th grade trigonometry to get the next "y" point based on the slope and the hypotenuse distance, which
+       is the distance between teeth along the curve*/
+      
+      rightP.y = p.y - 2 * toothImage.size.height * fabs (sin (radians));
+      
+      if (rightP.y < 0 || rightP.y > rightP0.y) continue;
+      
+      /*get the "t" value for this y*/
+      t = [self getTForYBezierPoint:rightP.y p0:rightP0 p1:rightCP p2:rightP1];
+      
+      /*move the point up along the curve to "t"*/
+      rightP = [self getBezierPointAndRadians:&radians forT:t p0:rightP0 p1:rightCP p2:rightP1];
     }
+    
   }
 }
 
@@ -414,33 +476,62 @@
  for readablity and trusting the compiler etc we have no problem passing in all these point structs by value instead of by
  reference. same as repeating tons of common factors, this is so we can check w/ the wpedo formulas by eye.
  
- slope is returned as radians, how much does a line segment intersectng an perpendicular to the curve at the point deviate from
- the horizontal. in other words 0 means the curve is vertical at the point and M_PI / 2 means the curve is horizontal.
+ slope is returned as radians, that's really the angle of how much the curve deviates from the horizontal. so vertical curve
+ is pi/2, horizontal curve is 0. now the we have to do trigonometry we suddenly care.
  
- one reason to do slope this way is so we can deal with "infinite" slope, dividing by zero and all that stuff. but also
  because we are going to use this angle to rotate teeth.
  
  */
 
-- (CGPoint)getBezierPointAndRadians:(float*)radians forT:(float)t p0:(CGPoint)p0 p1:(CGPoint)p1 p2:(CGPoint)p2
+- (CGPoint)getBezierPointAndRadians:(double*)radians forT:(double)t p0:(CGPoint)p0 p1:(CGPoint)p1 p2:(CGPoint)p2
 {
   insist (radians);
   insist (t >= 0.0 && t <= 1.0);
   
   /*point interpolation*/
-  float x, y;
+  double x, y;
   x = (1.0 - t) * (1.0 - t) * p0.x + 2.0 * (1.0 - t) * t * p1.x + t * t * p2.x;
   y = (1.0 - t) * (1.0 - t) * p0.y + 2.0 * (1.0 - t) * t * p1.y + t * t * p2.y;
   
   /*derivative*/
   
-  float dx, dy;
+  double dx, dy;
   dx = 2 * (1.0 - t) * (p1.x - p0.x) + 2 * t * (p2.x - p1.x);
   dy = 2 * (1.0 - t) * (p1.y - p0.y) + 2 * t * (p2.y - p1.y);
   
   
-  *radians = dx == 0.0 ? M_PI : atan (dy/dx);
+  *radians = dx == 0.0 ? M_PI / 2.0 : atan (dy/dx);
   return CGPointMake(x, y);
 }
+
+/*
+ solve a quadratic bezier for "t" given a y point. we return whichever "t" gives us a value
+ between 0 and 1.
+ 
+ the formulas come from typing this into wolfram alpha since we can't remember high school math
+ solve y = ((1 - t) ^ 2) p0 + 2 (1 - t) * t p1 + (t ^ 2) p2 for t
+ 
+ 2 answers, copied from wolfram and mindlessly converted into C. the formulas are the same except for
+ the - in front of the square root term but don't bother with subfactors to abuse the machine and for visual
+ double checking.
+ 
+ p0-2 p1+p2!=0 and t = (-sqrt(-p0 p2+p0 y+p1^2-2 p1 y+p2 y)-p0+p1)/(-p0+2 p1-p2)
+ p0-2 p1+p2!=0 and t =  (sqrt(-p0 p2+p0 y+p1^2-2 p1 y+p2 y)-p0+p1)/(-p0+2 p1-p2)
+ 
+ */
+
+- (double)getTForYBezierPoint:(double)y p0:(CGPoint)p0 p1:(CGPoint)p1 p2:(CGPoint)p2
+{
+  insist (p0.y -2 * p1.y + p2.y != 0.0);
+  
+  double t1 = (-sqrt(-p0.y*p2.y + p0.y*y + p1.y*p1.y - 2*p1.y*y + p2.y*y) -p0.y+p1.y)/(-p0.y + 2*p1.y - p2.y);
+  double t2 = ( sqrt(-p0.y*p2.y + p0.y*y + p1.y*p1.y - 2*p1.y*y + p2.y*y) -p0.y+p1.y)/(-p0.y + 2*p1.y - p2.y);
+  
+  if (t1 >= 0.0 && t1 <= 1.0)
+    return t1;
+  insist (t2 >= 0.0 && t2 <= 1.0);
+  return t2;
+}
+
 
 @end
