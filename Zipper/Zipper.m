@@ -317,7 +317,6 @@
   
   /*draw the teeth under the "v" of the bezier curves, starting with the left side*/
   
-  float topOfHandle = [self getTopOfHandleInRect:rect];
   CGPoint p;
   int tooth;
   for (tooth = 0; ; tooth++)
@@ -378,20 +377,21 @@
   /*the initial tooth is on the opposite side of the last one. we will always have drawn at least one tooth by now*/
   tooth++;
   
-  
   leftP.y = p.y - toothImage.size.height;
   leftP.x = leftP0.x;
   rightP.y = p.y - toothImage.size.height;
   rightP.x = rightP0.x;
   
-  /*as we go along, we can place each tooth with existing leftP, or rightP and then compute the next leftP or rightP values*/
+  /*
+    as we go along, we can place each tooth with existing leftP, or rightP and then compute the next leftP or rightP values.
+    the loop condition is such that we stop drawing when there's nothing more to draw, we can't easily compute this in advance.
+    our math code will really really hate it if we do computations outside the range of the bezier curves we have set up.
+   */
   for (; leftP.y >= 0.0 || rightP.y >= 0.0; tooth++)
   {
     /*left*/
     if (tooth % 2 == 0)
     {
-      if (leftP.y < 0 || leftP.y > leftP0.y) continue;
-      
       CGContextSaveGState(context);
       
       /*figure out where our "t" is for this point. we need this for slope.*/
@@ -401,13 +401,14 @@
       double radians;
       CGPoint p = [self getBezierPointAndRadians:&radians forT:t p0:leftP0 p1:leftCP p2:leftP1];
 
+      /*fabs is our favorite function. there is one corner case where for the left hand side we are getting a wrong sign. it might be due to
+        our initial leftP.y approximation, deal with it the easy way.*/
+      radians = fabs (radians);
+      
       CGContextTranslateCTM (context, leftP.x - (toothImage.size.width - TOOTH_HEAD_WIDTH), leftP.y);
       CGContextRotateCTM (context, radians - M_PI / 2.0);
       
-      /*only actually draw it if it's above the handle. this also handles a corner case by hiding it entirely.*/
-
-      if (leftP.y < topOfHandle)
-        [toothImage drawAtPoint: CGPointMake(0,0)];
+      [toothImage drawAtPoint: CGPointMake(0,0)];
       
       CGContextRestoreGState (context);
       
@@ -416,7 +417,9 @@
       
       leftP.y = p.y - 2 * toothImage.size.height * fabs (sin (radians));
       
-      if (leftP.y < 0 || leftP.y > leftP0.y) continue;
+      /*we might be out of left teeth to draw, if so we can't compute the next one without triggering assertions in our math code*/
+      if (leftP.y < 0)
+        continue;
       
       /*get the "t" value for this y*/
       t = [self getTForYBezierPoint:leftP.y p0:leftP0 p1:leftCP p2:leftP1];
@@ -426,7 +429,8 @@
     }
     else
     {
-      if (rightP.y < 0 || rightP.y > rightP0.y) continue;
+      /*this is shamelessly the mirror image of the above code, it could be refactored to be fewer lines, but that would be more confusing
+        than it would be worth*/
       
       CGContextSaveGState(context);
       
@@ -438,12 +442,9 @@
       CGPoint p = [self getBezierPointAndRadians:&radians forT:t p0:rightP0 p1:rightCP p2:rightP1];
   
       CGContextTranslateCTM (context, rightP.x + (toothImage.size.width - TOOTH_HEAD_WIDTH), rightP.y);
-      
       CGContextRotateCTM (context, radians - M_PI / 2.0);
-      
-      /*only actually draw it if it's above the handle*/
-      if (rightP.y < topOfHandle)
-        [toothImage drawAtPoint: CGPointMake(0,0)];
+  
+      [toothImage drawAtPoint: CGPointMake(0,0)];
       
       CGContextRestoreGState (context);
       
@@ -452,7 +453,9 @@
       
       rightP.y = p.y - 2 * toothImage.size.height * fabs (sin (radians));
       
-      if (rightP.y < 0 || rightP.y > rightP0.y) continue;
+      /*don't compute the next tooth if there isn't one*/
+      if (rightP.y < 0)
+        continue;
       
       /*get the "t" value for this y*/
       t = [self getTForYBezierPoint:rightP.y p0:rightP0 p1:rightCP p2:rightP1];
@@ -498,7 +501,6 @@
   double dx, dy;
   dx = 2 * (1.0 - t) * (p1.x - p0.x) + 2 * t * (p2.x - p1.x);
   dy = 2 * (1.0 - t) * (p1.y - p0.y) + 2 * t * (p2.y - p1.y);
-  
   
   *radians = dx == 0.0 ? M_PI / 2.0 : atan (dy/dx);
   return CGPointMake(x, y);
