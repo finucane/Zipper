@@ -4,8 +4,4 @@ It uses a lot of high school level math to model the zipper as it would actually
 
 The graphics are an example of how bad I am at drawing icons.
 
-I wrote this sample code based on a comment in a job interview I had, about how senior level iOS developers are able to write animated zippers.
-
-
-
-
+I wrote this sample code based on a comment in a job interview phone screening call I had, about how senior level iOS developers are able to write animated zippers. When I showed up for the interview they showed me their zipper. They had drawn a massive static graphic of a V-shaped transparent gap and they slid the graphic onto the screen at an angle, like a transparency on one of those old slide projector things.
