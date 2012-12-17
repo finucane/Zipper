@@ -1,7 +1,23 @@
-Example custom UIControl using Quartz2D to model a user interface element that looks like a zipper and unzips to reveal whatever UIView contents are underneath it. The control itself handles one user-settable value (the amount of unzip the zipper is) so it's sort of like a weird UISlider control.
+Example custom UIControl using Quartz2D to model a user interface element that looks like a zipper
+and unzips to reveal whatever UIView contents are underneath it. The control itself handles one
+user-settable value (the amount of unzip the zipper is) so it's sort of like a weird UISlider
+control.
 
-It uses a lot of high school level math to model the zipper as it would actually function in real life, in 2D at least. The teeth below the zipper handle are zipped together along a vertical line. Above the zipper handle the teeth separate from each other along a pair of bezier curves. These curves get wider and wider as the zipper is pulled down. The teeth are postioned by calculating lengths along the curve. This is done by getting the "y" value of each point using a straight line approximation (trigonometry) and then getting an exact "x" value by solving the bezier curve for "t" in terms of "y". See the code in "Zipper.m". I used wolfram alpha to derive the equation. You don't have to do anything harder than this (for instance using newton's method or binary search.) The teeth are rotated so they are always perpendicular to the curve by calculating the derivative of the bezier curve at each tooth point. That's from wikipedia.
+It uses a lot of high school level math to model the zipper as it would actually function in real
+life, in 2D at least. The teeth below the zipper handle are zipped together along a vertical
+line. Above the zipper handle the teeth separate from each other along a pair of bezier
+curves. These curves get wider and wider as the zipper is pulled down. The teeth are postioned by
+calculating lengths along the curve. This is done by getting the "y" value of each point using a
+straight line approximation (trigonometry) and then getting an exact "x" value by solving the bezier
+curve for "t" in terms of "y". See the code in "Zipper.m". I used wolfram alpha to derive the
+equation. You don't have to do anything harder than this (for instance using newton's method or
+binary search.) The teeth are rotated so they are always perpendicular to the curve by calculating
+the derivative of the bezier curve at each tooth point. That's from wikipedia.
 
 The graphics are an example of how bad I am at drawing icons.
 
-I wrote this sample code based on a comment in a job interview phone screening call I had, about how senior level iOS developers are able to write animated zippers. I did my zipper to show off, and then I showed up for the interview they showed me their. It was a massive static graphic of a V-shaped transparent gap which they slid onto the screen at an angle, like a transparency on one of those old slide projector things.
+I wrote this sample code based on a comment in a job interview phone screening call I had, about how
+senior level iOS developers are able to write animated zippers. I did my zipper to show off, and
+then I showed up for the interview they showed me their. It was a massive static graphic of a
+V-shaped transparent gap which they slid onto the screen at an angle, like a transparency on one of
+those old slide projector things.
